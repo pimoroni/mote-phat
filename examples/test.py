@@ -13,6 +13,6 @@ while True:
             hue /= 360.0
 
             r, g, b = [int(c*255) for c in colorsys.hsv_to_rgb(hue, 1.0, 1.0)]
-            motephat.set_pixel(channel, pixel, r, g, b)
+            motephat.set_pixel(channel+1, pixel, r, g, b)
 
     motephat.show()
