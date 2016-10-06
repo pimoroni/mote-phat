@@ -6,7 +6,8 @@ DAT = 10
 CLK = 11
 NUM_PIXELS_PER_CHANNEL = 16
 NUM_CHANNELS = 4
-BRIGHTNESS = 7
+BRIGHTNESS = 15
+MAX_BRIGHTNESS = 0b01111
 
 CHANNELS = [8,7,25,24]
 
@@ -33,7 +34,7 @@ def set_brightness(brightness):
     """
     for c in range(NUM_CHANNELS):
         for x in range(NUM_PIXELS_PER_CHANNEL):
-            pixels[c][x][3] = int(31.0 * brightness) & 0b11111
+            pixels[c][x][3] = int(MAX_BRIGHTNESS * brightness) & MAX_BRIGHTNESS
 
 def clear_channel(c):
     """Clear a single channel
@@ -128,7 +129,7 @@ def set_pixel(c, x, r, g, b, brightness=None):
     if brightness is None:
         brightness = pixels[c][x][3]
     else:
-        brightness = int(31.0 * brightness) & 0b11111
+        brightness = int(MAX_BRIGHTNESS * brightness) & MAX_BRIGHTNESS
 
     pixels[c][x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
 
