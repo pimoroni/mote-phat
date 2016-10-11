@@ -48,6 +48,6 @@ setup(
     keywords        = 'Raspberry Pi LED',
     url             = 'http://www.pimoroni.com',
     classifiers     = classifiers,
-    py_modules      = ['motephat'],
+    packages        = ['motephat'],
     install_requires= [ 'RPi.GPIO' ]
 )
