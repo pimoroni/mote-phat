@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import colorsys
 import math
 import time
 
-import colorsys
 import motephat
+
 
 motephat.set_brightness(1)
 

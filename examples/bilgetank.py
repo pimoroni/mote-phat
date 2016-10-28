@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import time
 import math
+import time
 from colorsys import hsv_to_rgb
 
 import motephat
