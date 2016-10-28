@@ -1,4 +1,4 @@
-# Mote pHAT
+![Mote](mote-logo.png)
 
 Drive four channels of APA102 pixels from your Raspberry Pi or Pi Zero with Mote pHAT
 
