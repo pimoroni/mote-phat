@@ -1,1 +1,1 @@
-#Blinkt Pure Python Library
+#Mote pHAT Python Library
