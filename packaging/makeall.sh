@@ -63,7 +63,7 @@ echo "reponame is $reponame and libname is $libname"
 
 # checking generating changelog file
 
-makelog.sh
+./makelog.sh
 
 # checking debian/changelog file
 
@@ -138,7 +138,7 @@ if $FLAG; then
     warning "Check all of the above and correct!"
 else
     success "all seems to be in order!"
-    makedeb.sh
+    ./makedeb.sh
 fi
 
 exit 0
