@@ -43,15 +43,14 @@ else
     inform "using reponame and libname overrides"
 fi
 
-if [ -z "$libname" ]; then
-    cd "$libdir"
-    python setup.py egg-info &> /dev/null
-    libname=$(head -n 1 ./*.egg-info/top_level.txt)
-    cd "$debdir"
-fi
-
 if [ -z "$reponame" ]; then
     reponame="$(basename $repodir)"
+fi
+
+if [ -z "$libname" ]; then
+    cd "$libdir"
+    libname=$(grep "name" setup.py | tr -d "[:space:]" | cut -c 7- | rev | cut -c 3- | rev)
+    cd "$debdir"
 fi
 
 echo "reponame is $reponame and libname is $libname"
