@@ -1,6 +1,6 @@
 motephat (0.0.1) UNRELEASED; urgency=low
 
-  * Initial Build
+  * Mote-compatible library for Mote pHAT
 
  -- Phil Howard <phil@pimoroni.com>  Fri, 28 Oct 2016 00:00:00 +0000
 
