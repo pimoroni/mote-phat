@@ -1,6 +1,6 @@
 README
 
-Blinkt! provides eight super-bright RGB LED indicators. Ideal for adding visual notifications to your Raspberry Pi.
+Mote pHAT sports four channels with microUSB connectors that can drive up to 64 RGB LEDs using four 16 pixel Mote strips.
 
-Learn more: https://shop.pimoroni.com/products/blinkt
-For examples run: `curl -sS get.pimoroni.com/blinkt | bash`
+Learn more: https://shop.pimoroni.com/products/mote-phat
+For examples run: `curl -sS get.pimoroni.com/motephat | bash`

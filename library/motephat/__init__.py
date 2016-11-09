@@ -1,5 +1,13 @@
 import atexit
-import RPi.GPIO as GPIO
+from sys import exit, version_info
+
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+
+
+__version__ = '0.0.1'
 
 
 DAT_PIN = 10
