@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+
 import colorsys
 
 import motephat
+
 
 offset = 0
 

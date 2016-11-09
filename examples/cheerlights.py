@@ -2,6 +2,7 @@
 
 import time
 from colorsys import hsv_to_rgb
+from sys import exit
 
 try:
     import requests
@@ -9,6 +10,7 @@ except ImportError:
     exit("This script requires the requests module\nInstall with: sudo pip install requests")
 
 import motephat
+
 
 motephat.set_brightness(1)
 
@@ -36,7 +38,7 @@ try:
             r, g, b = tuple(ord(c) for c in col[1:].lower().decode('hex'))
             for pixel in range(motephat.get_pixel_count(channel)):
                 motephat.set_pixel(channel, pixel, r, g, b)
-            channel += 1        
+            channel += 1
 
         motephat.show()
 

@@ -5,6 +5,7 @@ import time
 
 import motephat
 
+
 motephat.set_brightness(1)
 
 def usage():

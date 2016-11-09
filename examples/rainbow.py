@@ -5,6 +5,7 @@ from colorsys import hsv_to_rgb
 
 import motephat as mote
 
+
 print("""Rainbow
 
 Press Ctrl+C to exit.
