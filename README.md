@@ -16,7 +16,7 @@ In the new terminal window type:
 curl -sS https://get.pimoroni.com/motephat | bash
 ```
 
-If you choose to download examples you'll find them in `/home/pi/Pimoroni/mote-phat/`.
+If you choose to download examples you'll find them in `/home/pi/Pimoroni/motephat/`.
 
 **Library install for Python 3:**
 
