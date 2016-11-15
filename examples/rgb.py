@@ -7,6 +7,7 @@ import motephat
 
 
 motephat.set_brightness(1)
+motephat.set_clear_on_exit(False)
 
 def usage():
     print("Usage: {} <r> <g> <b>".format(sys.argv[0]))
