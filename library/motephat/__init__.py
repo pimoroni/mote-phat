@@ -7,7 +7,7 @@ except ImportError:
     exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 DAT_PIN = 10
@@ -83,7 +83,7 @@ def _write_byte(byte):
 # for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
 def _eof():
     GPIO.output(DAT_PIN, 0)
-    for x in range(36):
+    for x in range(42):
         GPIO.output(CLK_PIN, 1)
         GPIO.output(CLK_PIN, 0)
 
