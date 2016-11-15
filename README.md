@@ -43,3 +43,5 @@ other environments:
 ```bash
 sudo pip2 install motephat
 ```
+
+In all cases you will have to enable the i2c bus.
