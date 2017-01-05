@@ -1,0 +1,15 @@
+FROM armhf/alpine:latest
+MAINTAINER alexellis2@gmail.com
+
+WORKDIR /root/
+RUN apk add --update git python && \
+    git clone https://github.com/pimoroni/mote-phat && \
+    apk del git
+WORKDIR /root/mote-phat/library
+RUN apk add --update py-setuptools gcc python-dev ca-certificates linux-headers musl-dev libffi-dev && \
+    /usr/bin/easy_install-2.7 RPi.GPIO && \
+    python setup.py install && \
+    apk del gcc  ca-certificates linux-headers musl-dev libffi-dev
+WORKDIR /root/mote-phat/examples
+
+CMD ["python2", "./test.py"]
