@@ -49,7 +49,6 @@ In all cases you will have to enable the i2c bus.
 
 ##Documentation & Support
 
-* Getting started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-mote
 * Function reference - http://docs.pimoroni.com/motephat/
 * GPIO Pinout - https://pinout.xyz/pinout/mote_phat
 * Get help - http://forums.pimoroni.com/c/support
