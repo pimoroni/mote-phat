@@ -7,7 +7,7 @@ import motephat
 
 
 motephat.set_brightness(1)
-motephat.set_clear_on_exit(False)
+motephat.set_clear_on_exit(True)
 
 def usage():
     print("Usage: {} <r> <g> <b>".format(sys.argv[0]))
@@ -27,10 +27,13 @@ if max(r,g,b) > 255:
     usage()
 
 print("Setting Mote to {r},{g},{b}".format(r=r,g=g,b=b))
+print ("Press CTRL+C to exit")
 
-for channel in range(4):
-    for pixel in range(16):
-        motephat.set_pixel(channel + 1, pixel, r, g, b)
-    time.sleep(0.01)
+while True:
 
-motephat.show()
+    for channel in range(4):
+        for pixel in range(16):
+            motephat.set_pixel(channel + 1, pixel, r, g, b)
+        time.sleep(0.01)
+
+    motephat.show()
