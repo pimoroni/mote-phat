@@ -13,7 +13,7 @@ Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python:Depends}, python-rpi.gpio
 Suggests: python-psutil, python-requests
-Description: python library designed to control Mote pHAT
+Description: Python library for the Pimoroni Mote pHAT
  Mote pHAT provides four multiplexed channels for driving APA102 pixels.
  .
  This is the Python 2 version of the package.
@@ -23,7 +23,7 @@ Architecture: all
 Section: python
 Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio
 Suggests: python3-psutil, python3-requests
-Description: python library designed to control Mote pHAT
+Description: Python library for the Pimoroni Mote pHAT
  Mote pHAT provides four multiplexed channels for driving APA102 pixels.
  .
  This is the Python 3 version of the package.
