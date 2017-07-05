@@ -9,8 +9,6 @@ import motephat
 
 motephat.set_brightness(1)
 
-offset = 0
-
 while True:
     br = (math.sin(time.time()) + 1) / 2
     br *= 255.0
