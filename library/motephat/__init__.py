@@ -12,20 +12,41 @@ __version__ = '0.0.2'
 
 DAT_PIN = 10
 CLK_PIN = 11
+LED_SOF = 0b11100000
+LED_MAX_BR = 0b00011111
 
 CHANNEL_PINS = [8,7,25,24]
 
 NUM_PIXELS_PER_CHANNEL = 16
 NUM_CHANNELS = 4
-BRIGHTNESS = 15
-MAX_BRIGHTNESS = 0b01111
 
+DEFAULT_BRIGHTNESS = 0.2
+
+_gamma_table = [
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
+2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5,
+6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 11, 11,
+11, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18,
+19, 19, 20, 21, 21, 22, 22, 23, 23, 24, 25, 25, 26, 27, 27, 28,
+29, 29, 30, 31, 31, 32, 33, 34, 34, 35, 36, 37, 37, 38, 39, 40,
+40, 41, 42, 43, 44, 45, 46, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+71, 72, 73, 74, 76, 77, 78, 79, 80, 81, 83, 84, 85, 86, 88, 89,
+90, 91, 93, 94, 95, 96, 98, 99,100,102,103,104,106,107,109,110,
+111,113,114,116,117,119,120,121,123,124,126,128,129,131,132,134,
+135,137,138,140,142,143,145,146,148,150,151,153,155,157,158,160,
+162,163,165,167,169,170,172,174,176,178,179,181,183,185,187,189,
+191,193,194,196,198,200,202,204,206,208,210,212,214,216,218,220,
+222,224,227,229,231,233,235,237,239,241,244,246,248,250,252,255]
+
+_white_point = (1.0, 1.0, 1.0)
 
 pixels = [
-    [[0,0,0,BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
-    [[0,0,0,BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
-    [[0,0,0,BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
-    [[0,0,0,BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL
+    [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
+    [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
+    [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
+    [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL
 ]
 
 channels = [(16, False) for c in range(NUM_CHANNELS)]
@@ -39,11 +60,47 @@ def _exit():
         show()
     GPIO.cleanup()
 
+def set_white_point(r, g, b):
+    """Set the white point.
+
+    :param r: Red amount, from 0.0 to 1.0
+    :param g: Green amount, from 0.0 to 1.0
+    :param b: Green amount, from 0.0 to 1.0
+
+    """
+    global _white_point
+    _white_point = (r, g, b)
+
+def set_gamma_table(table):
+    """Set the gamma table.
+
+    :param table: Must be a list of 256 values
+
+    """
+
+    global _gamma_table
+    if isinstance(table, list) and len(table) == 256:
+        _gamma_table = table
+
 def configure_channel(channel, num_pixels, gamma_correction=False):
+    """Configure a channel.
+
+    :param channel: Index of channel to configure
+    :param num_pixels: Number of pixels in channel
+    :param gamma_correction: Whether this channel should be gamma corrected
+
+    """
+
     global channels
-    channels[channel - 1] = (num_pixels, False)
+    channels[channel - 1] = (num_pixels, gamma_correction)
 
 def get_pixel_count(channel):
+    """Get the number of pixels in a channel.
+
+    :param channel:  Index of channel to query
+
+    """
+
     return channels[channel - 1][0]
 
 def set_brightness(brightness):
@@ -53,7 +110,7 @@ def set_brightness(brightness):
     """
     for c in range(NUM_CHANNELS):
         for x in range(NUM_PIXELS_PER_CHANNEL):
-            pixels[c][x][3] = int(MAX_BRIGHTNESS * brightness) & MAX_BRIGHTNESS
+            pixels[c][x][3] = brightness
 
 def clear_channel(c):
     """Clear a single channel
@@ -106,10 +163,12 @@ def show():
 
     for index, channel in enumerate(pixels):
         _select_channel(index)
+        gamma = _gamma_table if channels[1] else range(256)
         _sof()
         for pixel in channel:
             r, g, b, brightness = pixel
-            _write_byte(0b11100000 | brightness)
+            r, g, b = [gamma[int(x * brightness * _white_point[i]) & 0xff] for i, x in enumerate([r, g, b])]
+            _write_byte(LED_SOF | LED_MAX_BR)
             _write_byte(b)
             _write_byte(g)
             _write_byte(r)
@@ -150,10 +209,8 @@ def set_pixel(c, x, r, g, b, brightness=None):
 
     if brightness is None:
         brightness = pixels[c][x][3]
-    else:
-        brightness = int(MAX_BRIGHTNESS * brightness) & MAX_BRIGHTNESS
 
-    pixels[c][x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
+    pixels[c][x] = [r, g, b, brightness]
 
 def set_clear_on_exit(value=True):
     """Set whether Mote pHAT should be cleared upon exit
