@@ -71,7 +71,7 @@ def set_white_point(r, g, b):
     global _white_point
     _white_point = (r, g, b)
 
-def set_gamma_table(table):
+def _set_gamma_table(table):
     """Set the gamma table.
 
     :param table: Must be a list of 256 values
