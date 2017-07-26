@@ -112,22 +112,22 @@ def set_brightness(brightness):
         for x in range(NUM_PIXELS_PER_CHANNEL):
             pixels[c][x][3] = brightness
 
-def clear_channel(c):
+def clear_channel(channel):
     """Clear a single channel
 
-    :param c: Channel to clear: 0 to 3
+    :param channel: Channel to clear: 0 to 3
     """
-    for x in range(NUM_PIXELS_PER_CHANNEL):
-        pixels[c-1][x][0:3] = [0,0,0]
+    for index in range(NUM_PIXELS_PER_CHANNEL):
+        pixels[channel-1][index][0:3] = [0,0,0]
 
 def clear():
     """Clear the pixel buffer"""
-    for c in range(1, NUM_CHANNELS+1):
-        clear_channel(c)
+    for channel in range(1, NUM_CHANNELS+1):
+        clear_channel(channel)
 
-def _select_channel(c):
+def _select_channel(channel):
     for x in range(NUM_CHANNELS):
-        GPIO.output(CHANNEL_PINS[x], GPIO.LOW if x==c else GPIO.HIGH)
+        GPIO.output(CHANNEL_PINS[x], GPIO.LOW if x==channel else GPIO.HIGH)
 
 def _write_byte(byte):
     for x in range(8):
@@ -189,23 +189,24 @@ def set_all(r, g, b, brightness=None, channel=None):
     """
 
     if channel in range(1, NUM_CHANNELS+1):
-        for x in range(NUM_PIXELS_PER_CHANNEL):
-            set_pixel(channel, x, r, g, b, brightness)
+        for index in range(get_pixel_count(channel)):
+            set_pixel(channel, index, r, g, b, brightness)
         return
 
-    for c in range(1, NUM_CHANNELS+1):
-        for x in range(NUM_PIXELS_PER_CHANNEL):
-            set_pixel(c, x, r, g, b, brightness)
+    for channel in range(1, NUM_CHANNELS+1):
+        for index in range(get_pixel_count(channel)):
+            set_pixel(channel, index, r, g, b, brightness)
 
-def get_pixel(c, x):
-    return tuple(pixels[c-1][x])
+def get_pixel(channel, index):
+    return tuple(pixels[channel-1][index])
 
-def set_pixel(c, x, r, g, b, brightness=None):
+def set_pixel(channel, index, r, g, b, brightness=None):
     """Set the RGB value, and optionally brightness, of a single pixel
     
     If you don't supply a brightness value, the last value will be kept.
 
-    :param x: The horizontal position of the pixel: 0 to 7
+    :param channel: The channel on which to set the pixel: 1, 2, 3 or 4
+    :param index: The horizontal position of the pixel: 0 to 7
     :param r: Amount of red: 0 to 255
     :param g: Amount of green: 0 to 255
     :param b: Amount of blue: 0 to 255
@@ -213,14 +214,14 @@ def set_pixel(c, x, r, g, b, brightness=None):
 
     """
 
-    c -= 1
-    c %= NUM_CHANNELS
-    x %= NUM_PIXELS_PER_CHANNEL
+    channel -= 1
+    channel %= NUM_CHANNELS
+    index %= get_pixel_count(channel)
 
     if brightness is None:
-        brightness = pixels[c][x][3]
+        brightness = pixels[channel][index][3]
 
-    pixels[c][x] = [r, g, b, brightness]
+    pixels[channel][index] = [r, g, b, brightness]
 
 def set_clear_on_exit(value=True):
     """Set whether Mote pHAT should be cleared upon exit
