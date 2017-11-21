@@ -4,7 +4,7 @@ from sys import exit, version_info
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 __version__ = '0.0.2'
@@ -159,6 +159,7 @@ def show():
         GPIO.setwarnings(False)
         GPIO.setup([DAT_PIN,CLK_PIN],GPIO.OUT)
         GPIO.setup(CHANNEL_PINS,GPIO.OUT)
+        atexit.register(_exit)
         _gpio_setup = True
 
     for index, channel in enumerate(pixels):
@@ -236,6 +237,4 @@ def set_clear_on_exit(value=True):
     """
     global _clear_on_exit
     _clear_on_exit = value
-
-atexit.register(_exit)
 
