@@ -1,21 +1,19 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import colorsys
 import math
 import time
 
-import motephat
+import motephat as mote
 
+try:
+    while True:
+        br = (math.sin(time.time()) + 1) / 2
+        br *= 255.0
+        br = int(br)
+        mote.set_all(br, br, br)
+        mote.show()
+        time.sleep(0.01)
 
-motephat.set_brightness(1)
-
-while True:
-    br = (math.sin(time.time()) + 1) / 2
-    br *= 255.0
-    br = int(br)
-
-    for channel in range(1,5):
-        for pixel in range(16):
-            motephat.set_pixel(channel, pixel, br, br, br)
-
-    motephat.show()
+except KeyboardInterrupt:
+    mote.clear()
+    mote.show()
