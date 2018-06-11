@@ -1,4 +1,5 @@
 import atexit
+import time
 from sys import exit, version_info
 
 try:
@@ -133,8 +134,10 @@ def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT_PIN, byte & 0b10000000)
         GPIO.output(CLK_PIN, 1)
+        time.sleep(0.0000005)
         byte <<= 1
         GPIO.output(CLK_PIN, 0)
+        time.sleep(0.0000005)
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
 # for some reason it takes 36 clocks, the other IC takes just 4 (number of pixels/2)
@@ -142,13 +145,17 @@ def _eof():
     GPIO.output(DAT_PIN, 0)
     for x in range(42):
         GPIO.output(CLK_PIN, 1)
+        time.sleep(0.0000005)
         GPIO.output(CLK_PIN, 0)
+        time.sleep(0.0000005)
 
 def _sof():
     GPIO.output(DAT_PIN,0)
     for x in range(32):
         GPIO.output(CLK_PIN, 1)
+        time.sleep(0.0000005)
         GPIO.output(CLK_PIN, 0)
+        time.sleep(0.0000005)
 
 def show():
     """Output the buffer to Mote pHAT"""
@@ -168,7 +175,8 @@ def show():
         _sof()
         for pixel in channel:
             r, g, b, brightness = pixel
-            r, g, b = [gamma[int(x * brightness * _white_point[i]) & 0xff] for i, x in enumerate([r, g, b])]
+            r, g, b = [int(gamma[int(x)] * brightness * _white_point[i]) & 0xff for i, x in enumerate([r, g, b])]
+            print(r, g, b)
             _write_byte(LED_SOF | LED_MAX_BR)
             _write_byte(b)
             _write_byte(g)
