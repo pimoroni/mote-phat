@@ -5,6 +5,14 @@ import colorsys
 import motephat
 
 
+print("""
+Mote pHAT: Test
+
+Press Ctrl+C to exit!
+
+""")
+
+
 offset = 0
 
 while True:

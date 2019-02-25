@@ -29,6 +29,8 @@ if max(r, g, b) > 255:
     usage()
 
 print("""
+Mote pHAT: RGB
+
 Setting Mote to {r},{g},{b}"
 
 Press Ctrl+C to exit!

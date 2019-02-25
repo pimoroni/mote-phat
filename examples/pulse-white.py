@@ -5,6 +5,16 @@ import time
 
 import motephat as mote
 
+print("""
+Mote pHAT: Pulse White
+
+Pulse all LEDs white from 0, 0, 0 to 255, 255, 255
+using a sine wave.
+
+Press Ctrl+C to exit!
+
+""")
+
 try:
     while True:
         br = (math.sin(time.time()) + 1) / 2

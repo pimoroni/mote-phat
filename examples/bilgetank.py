@@ -7,7 +7,8 @@ from colorsys import hsv_to_rgb
 import motephat
 
 
-print("""#BilgeTank
+print("""
+Mote pHAT: #BilgeTank
 
 This is the lighting script we use to run the shelves in BilgeTank.
 

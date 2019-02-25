@@ -6,7 +6,8 @@ from colorsys import hsv_to_rgb
 import motephat as mote
 
 
-print("""Rainbow
+print("""
+Mote pHAT: Static Rainbow
 
 Press Ctrl+C to clear and exit.
 """)

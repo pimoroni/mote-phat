@@ -12,6 +12,16 @@ Install with: sudo pip install requests""")
 import motephat
 
 
+print("""
+Mote pHAT: Cheerlights
+
+Display colours from the cheerlights API.
+
+Press Ctrl+C to exit!
+
+""")
+
+
 motephat.set_brightness(1)
 
 num_pixels = 16
