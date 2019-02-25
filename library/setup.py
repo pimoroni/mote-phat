@@ -27,27 +27,28 @@ try:
 except ImportError:
     from distutils.core import setup
 
-classifiers = ['Development Status :: 5 - Production/Stable',
-               'Operating System :: POSIX :: Linux',
-               'License :: OSI Approved :: MIT License',
-               'Intended Audience :: Developers',
-               'Programming Language :: Python :: 2.6',
-               'Programming Language :: Python :: 2.7',
-               'Programming Language :: Python :: 3',
-               'Topic :: Software Development',
-               'Topic :: System :: Hardware']
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Operating System :: POSIX :: Linux',
+    'License :: OSI Approved :: MIT License',
+    'Intended Audience :: Developers',
+    'Programming Language :: Python :: 2.6',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3',
+    'Topic :: Software Development',
+    'Topic :: System :: Hardware']
 
 setup(
-    name            = 'motephat',
-    version         = '0.0.2',
-    author          = 'Philip Howard',
-    author_email    = 'phil@pimoroni.com',
-    description     = """Python library for driving Pimoroni Mote pHAT""",
-    long_description= open('README.txt').read() + open('CHANGELOG.txt').read(),
-    license         = 'MIT',
-    keywords        = 'Raspberry Pi LED',
-    url             = 'http://www.pimoroni.com',
-    classifiers     = classifiers,
-    packages        = ['motephat'],
-    install_requires= [ 'RPi.GPIO' ]
+   name='motephat',
+   version='0.0.2',
+   author='Philip Howard',
+   author_email='phil@pimoroni.com',
+   description="""Python library for driving Pimoroni Mote pHAT""",
+   long_description=open('README.rst').read() + "\n" + open('CHANGELOG.txt').read(),
+   license='MIT',
+   keywords='Raspberry Pi LED',
+   url='http://www.pimoroni.com',
+   classifiers=classifiers,
+   packages=['motephat'],
+   install_requires=['RPi.GPIO']
 )
