@@ -188,7 +188,6 @@ def show():
         for pixel in channel:
             r, g, b, brightness = pixel
             r, g, b = [int(gamma[int(x)] * brightness * _white_point[i]) & 0xff for i, x in enumerate([r, g, b])]
-            print(r, g, b)
             _write_byte(LED_SOF | LED_MAX_BR)
             _write_byte(b)
             _write_byte(g)
