@@ -7,13 +7,16 @@ from colorsys import hsv_to_rgb
 import motephat
 
 
-print("""#BilgeTank
+print("""
+Mote pHAT: #BilgeTank
 
 This is the lighting script we use to run the shelves in BilgeTank.
 
-It uses a simple Sine wave to sweep gently between greeny blue and blue, giving a nice oceanic effect!
+It uses a simple Sine wave to sweep gently between greeny blue
+and blue, giving a nice oceanic effect!
 
-This is achieved by moving around a portion of a hue wheel, defined by hue_start and hue_range.
+This is achieved by moving around a portion of a hue wheel,
+defined by hue_start and hue_range.
 
 Press Ctrl+C to clear and exit.
 """)
@@ -38,14 +41,15 @@ motephat.configure_channel(4, 16, False)
 try:
     while True:
         phase = 0
-        for channel in [1,2,3,4]:
+        for channel in [1, 2, 3, 4]:
             for pixel in range(motephat.get_pixel_count(channel)):
                 h = (time.time() * speed) + (phase / 10.0)
-                h = math.sin(h) * (hue_range/2)
-                hue = hue_start + (hue_range/2) + h
+                h = math.sin(h) * (hue_range / 2)
+                hue = hue_start + (hue_range / 2) + h
                 hue %= 360
+                hue /= 360.0
 
-                r, g, b = [int(c * 255) for c in hsv_to_rgb(hue/360.0, 1.0, 1.0)]
+                r, g, b = [int(c * 255) for c in hsv_to_rgb(hue, 1.0, 1.0)]
                 motephat.set_pixel(channel, pixel, r, g, b)
 
                 phase += 1

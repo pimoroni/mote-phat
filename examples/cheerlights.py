@@ -1,15 +1,25 @@
 #!/usr/bin/env python
 
 import time
-from colorsys import hsv_to_rgb
 from sys import exit
 
 try:
     import requests
 except ImportError:
-    exit("This script requires the requests module\nInstall with: sudo pip install requests")
+    exit("""This script requires the requests module.
+Install with: sudo pip install requests""")
 
 import motephat
+
+
+print("""
+Mote pHAT: Cheerlights
+
+Display colours from the cheerlights API.
+
+Press Ctrl+C to exit!
+
+""")
 
 
 motephat.set_brightness(1)
@@ -28,7 +38,7 @@ try:
         j = r.json()
         f = j['feeds'][-8:]
 
-        f = [element for index, element in enumerate(f) if index%2==0]
+        f = [element for index, element in enumerate(f) if index % 2 == 0]
 
         print(f)
 

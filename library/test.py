@@ -6,20 +6,23 @@ import atexit
 
 sys.modules["RPi.GPIO"] = mock.Mock()
 sys.modules["RPi"] = mock.Mock()
-sys.path.insert(0,"../examples/")
+sys.path.insert(0, "../examples/")
 
 import motephat
 
 _running = True
 
+
 def watch():
-	while _running:
-		print(motephat.pixels)
-		time.sleep(0.5)
+    while _running:
+        print(motephat.pixels)
+        time.sleep(0.5)
+
 
 def stop():
-	global _running
-	_running = False
+    global _running
+    _running = False
+
 
 _t_watch = threading.Thread(target=watch)
 _t_watch.start()
