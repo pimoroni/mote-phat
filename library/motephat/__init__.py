@@ -42,6 +42,8 @@ _gamma_table = [
 
 _white_point = (1.0, 1.0, 1.0)
 
+_sleep_time = 0
+
 pixels = [
     [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
     [[0, 0, 0, DEFAULT_BRIGHTNESS]] * NUM_PIXELS_PER_CHANNEL,
@@ -143,10 +145,10 @@ def _write_byte(byte):
     for x in range(8):
         GPIO.output(DAT_PIN, byte & 0b10000000)
         GPIO.output(CLK_PIN, 1)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
         byte <<= 1
         GPIO.output(CLK_PIN, 0)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
 
 
 # Emit exactly enough clock pulses to latch the small dark die APA102s which are weird
@@ -155,18 +157,18 @@ def _eof():
     GPIO.output(DAT_PIN, 0)
     for x in range(42):
         GPIO.output(CLK_PIN, 1)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
         GPIO.output(CLK_PIN, 0)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
 
 
 def _sof():
     GPIO.output(DAT_PIN, 0)
     for x in range(32):
         GPIO.output(CLK_PIN, 1)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
         GPIO.output(CLK_PIN, 0)
-        time.sleep(0.0000005)
+        time.sleep(_sleep_time)
 
 
 def show():
