@@ -1,3 +1,11 @@
+0.0.3
+-----
+
+* Fix EOF packet to 42 clocks
+* Add gamma adjustment
+* Switch from "exit" to "raise ImportError" when checking required modules
+* Add short sleep to guarantee that pin state is set when toggled
+
 0.0.2
 -----
 
